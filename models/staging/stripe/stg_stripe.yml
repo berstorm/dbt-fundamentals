@@ -2,13 +2,23 @@ version: 2
 
 models:
   - name: stg_payments
+    description: Staged payments data from our stripe app
     columns:
       - name: payment_id
+        description: Primary key for stg_payments
         tests:
           - unique
           - not_null
       - name: order_id
+        description: Foreign key to stg_orders.order_id
         tests:
           - relationships:
               to: ref('stg_orders')
               field: order_id
+      - name: status
+        description: '{{ doc("payment_status") }}'
+        tests:
+          - accepted_values:
+                values:
+                  - success
+                  - fail
