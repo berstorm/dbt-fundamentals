@@ -10,7 +10,7 @@ order_payments as (
         order_id,
         sum(case when status = 'success' then amount end) as amount
 
-    from payments
+    from {{ ref('stg_payments')}}
     group by 1
 
 ),
